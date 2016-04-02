@@ -32,7 +32,131 @@ struct node{
 	int data;
 	struct node *next;
 };
+
+
+
 int merge_circularlists(struct node **head1, struct node **head2){
 	//Returns Length of merged Sorted circular SLL and also points *head1 to final SLL .
-	return -1;
+	
+if (*head1 == NULL && *head2 == NULL)  return -1;
+	struct node *temp1,*list; int count = 0;
+
+
+	
+	if (*head1 == NULL && *head2 != NULL) {
+		temp1 = *head2;
+		while (temp1!= NULL)
+		{
+			temp1 = temp1->next;
+			count++;
+
+		}
+		temp1->next = *head2;
+		*head1 = *head2;
+		return count;
+	}
+
+	else if (*head1 != NULL && *head2 == NULL){ 
+		temp1 = *head1;
+		while (temp1 != NULL)
+		{
+			temp1 = temp1->next;
+			count++;
+
+		}
+		temp1->next = *head2;
+	
+		return count; }
+
+	struct node *h1=*head1, *h2=*head2;
+
+	while (h1->next != *head1)
+	{
+		h1 = h1->next;
+	}
+	h1->next = NULL;
+
+	while (h2->next != *head2)
+	{
+		h2 = h2->next;
+	}
+	h2->next = NULL;
+
+	h1 = *head1; h2 = *head2;
+	if (h1->data < h2->data)
+	{
+		count++;
+		list = h1; h1 = h1->next;
+	}
+	else
+	{
+		count++;
+		list = h2;
+		h2 = h2->next;
+	}
+
+	temp1 = list;
+
+	while (h1 != NULL && h2 != NULL)
+	{
+		count++;
+		if (h1->data < h2->data)
+		{
+			list->next = h1;
+			list = list->next;
+			h1 = h1->next;
+
+		}
+
+		else
+		{
+			list->next = h2;
+			list = list->next;
+			h2 = h2->next;
+		}
+
+	}
+
+	if (h1) 
+	{
+		list->next = h1;
+	
+		while (h1->next != NULL)
+		{
+		h1 = h1->next;
+			count++;
+
+		}
+		count++;
+		h1->next = temp1;
+		*head1 = temp1;
+	}
+	else if(h2)      
+	{
+		
+		list->next = h2;
+		while (h2->next != NULL)
+		{
+			h2 = h2->next;
+			count++;
+
+		}
+		count++;
+		h2->next = temp1;
+		*head1 = temp1;
+	}
+
+
+
+	return count; 
+
+
+
+
+
+
+
+
+
+
 }

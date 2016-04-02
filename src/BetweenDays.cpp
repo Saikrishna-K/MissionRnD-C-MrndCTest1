@@ -27,8 +27,106 @@ struct node{
 	int data;
 	struct node *next;
 };
+int mon[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+int months(int month, int year)
+{
+	int i,days=0;
+	for (i = 0; i<month - 1; i++)
+	{
+		if (i == 1)
+		{
+			if (year % 4 == 0)
+				days += 29;
+			else
+				days += 28;
+		}
+		else
+			days += mon[i];
+	}
+	return  days;
+}
+
+
+
 
 
 int between_days(struct node *date1head, struct node *date2head){
-	return -1;
+
+
+	if (date1head == NULL || date2head == NULL)
+		return -1;
+
+
+	int i = 0;
+	int day=0, month=0, year=0, day2=0, month2=0, year2=0;
+	while (i != 2){
+		i++;
+		day += date1head->data;
+		day *= 10;
+		date1head=date1head->next;
+	}
+	i = 0;
+
+	while (i != 2){
+		i++;
+		month += date1head->data; month *= 10;
+		date1head = date1head->next;
+	}
+	i = 0;
+	while (date1head){
+		i++;
+		year += date1head->data; year *= 10;
+		date1head = date1head->next;
+	}
+
+
+	i = 0;
+	while (i != 2){
+		i++;
+		day2 += date2head->data;
+		day2 *= 10;
+		date2head = date2head->next;
+	}
+	i = 0;
+
+	while (i != 2){
+		i++;
+		month2 += date2head->data; month2 *= 10;
+		date2head = date2head->next;
+	}
+	i = 0;
+	while (date2head){
+		i++;
+		year2 += date2head->data; year2 *= 10;
+		date2head = date2head->next;
+	}
+
+	int Bdays = 0;
+
+	for (i = year; i < year2; i++)
+	{
+		if (i % 4 == 0)
+		{
+			Bdays += 366;
+		}
+		else
+			Bdays += 365;
+
+	}
+
+	Bdays -= months(month,year);
+	Bdays -= day;
+	Bdays += months(month2,year2);
+	Bdays += day2;
+
+	if (Bdays < 0)
+	{
+		Bdays *= -1;
+	}
+
+	return Bdays;
+
+
+
 }

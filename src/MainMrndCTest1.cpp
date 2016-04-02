@@ -69,7 +69,11 @@ void printSll(struct node *head,int len){
 
 void make_it_circular(struct node *head){
 	//Makes a Normal SLL circular ,Make Last->next=head;
-
+	struct node *temp = head;
+	while (head->next != NULL){
+		head = head->next;
+	}
+	head->next = temp;
 }
 
 //End of Helper Functions
@@ -94,4 +98,17 @@ int main(){
 	printf("Total Days - %d\n",days);
 	*/
 	//Test Concat4 Strings
+	int dates[2][8] = { { 0, 2, 0, 4, 2, 0, 1, 6 }, { 0, 4, 0, 4, 2, 0, 1, 6 } };
+
+	struct node *date1head = NULL, *date2head = NULL;
+	for (int i = 7; i >= 0; i--){
+		addNode(&date1head, dates[0][i]);
+		addNode(&date2head, dates[1][i]);
+	}
+
+	int days = between_days(date1head, date2head);
+	getchar();
+	return 0;
+
+
 }
